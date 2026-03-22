@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'left+-left*/FLOORDIV%rightUMINUSFLOORDIV NAME NUMBER REALstatement : NAME "=" expressionstatement : expressionexpression : expression \'+\' expression\n| expression \'-\' expression\n| expression \'*\' expression\n| expression \'/\' expression\n| expression FLOORDIV expression\n| expression \'%\' expressionexpression : \'-\' expression %prec UMINUSexpression : \'(\' expression \')\'expression : REAL \'(\' expression \')\'expression : NUMBERexpression : NAME'
+_lr_signature = 'left+-left*/FLOORDIV%rightUMINUSFLOOR FLOORDIV NAME NUMBER REALstatement : NAME "=" expressionstatement : expressionexpression : expression \'+\' expression\n| expression \'-\' expression\n| expression \'*\' expression\n| expression \'/\' expression\n| expression FLOORDIV expression\n| expression \'%\' expressionexpression : \'-\' expression %prec UMINUSexpression : \'(\' expression \')\'expression : REAL \'(\' expression \')\'expression : FLOOR \'(\' expression \')\'expression : NUMBERexpression : NAME'
     
-_lr_action_items = {'NAME':([0,4,5,8,9,10,11,12,13,14,18,],[2,16,16,16,16,16,16,16,16,16,16,]),'-':([0,2,3,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,],[4,-13,10,4,4,-12,4,4,4,4,4,4,4,-9,-13,10,4,10,-3,-4,-5,-6,-7,-8,-10,10,-11,]),'(':([0,4,5,6,8,9,10,11,12,13,14,18,],[5,5,5,18,5,5,5,5,5,5,5,5,]),'REAL':([0,4,5,8,9,10,11,12,13,14,18,],[6,6,6,6,6,6,6,6,6,6,6,]),'NUMBER':([0,4,5,8,9,10,11,12,13,14,18,],[7,7,7,7,7,7,7,7,7,7,7,]),'$end':([1,2,3,7,15,16,19,20,21,22,23,24,25,26,28,],[0,-13,-2,-12,-9,-13,-1,-3,-4,-5,-6,-7,-8,-10,-11,]),'=':([2,],[8,]),'+':([2,3,7,15,16,17,19,20,21,22,23,24,25,26,27,28,],[-13,9,-12,-9,-13,9,9,-3,-4,-5,-6,-7,-8,-10,9,-11,]),'*':([2,3,7,15,16,17,19,20,21,22,23,24,25,26,27,28,],[-13,11,-12,-9,-13,11,11,11,11,-5,-6,-7,-8,-10,11,-11,]),'/':([2,3,7,15,16,17,19,20,21,22,23,24,25,26,27,28,],[-13,12,-12,-9,-13,12,12,12,12,-5,-6,-7,-8,-10,12,-11,]),'FLOORDIV':([2,3,7,15,16,17,19,20,21,22,23,24,25,26,27,28,],[-13,13,-12,-9,-13,13,13,13,13,-5,-6,-7,-8,-10,13,-11,]),'%':([2,3,7,15,16,17,19,20,21,22,23,24,25,26,27,28,],[-13,14,-12,-9,-13,14,14,14,14,-5,-6,-7,-8,-10,14,-11,]),')':([7,15,16,17,20,21,22,23,24,25,26,27,28,],[-12,-9,-13,26,-3,-4,-5,-6,-7,-8,-10,28,-11,]),}
+_lr_action_items = {'NAME':([0,4,5,9,10,11,12,13,14,15,19,20,],[2,17,17,17,17,17,17,17,17,17,17,17,]),'-':([0,2,3,4,5,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,],[4,-14,11,4,4,-13,4,4,4,4,4,4,4,-9,-14,11,4,4,11,-3,-4,-5,-6,-7,-8,-10,11,11,-11,-12,]),'(':([0,4,5,6,7,9,10,11,12,13,14,15,19,20,],[5,5,5,19,20,5,5,5,5,5,5,5,5,5,]),'REAL':([0,4,5,9,10,11,12,13,14,15,19,20,],[6,6,6,6,6,6,6,6,6,6,6,6,]),'FLOOR':([0,4,5,9,10,11,12,13,14,15,19,20,],[7,7,7,7,7,7,7,7,7,7,7,7,]),'NUMBER':([0,4,5,9,10,11,12,13,14,15,19,20,],[8,8,8,8,8,8,8,8,8,8,8,8,]),'$end':([1,2,3,8,16,17,21,22,23,24,25,26,27,28,31,32,],[0,-14,-2,-13,-9,-14,-1,-3,-4,-5,-6,-7,-8,-10,-11,-12,]),'=':([2,],[9,]),'+':([2,3,8,16,17,18,21,22,23,24,25,26,27,28,29,30,31,32,],[-14,10,-13,-9,-14,10,10,-3,-4,-5,-6,-7,-8,-10,10,10,-11,-12,]),'*':([2,3,8,16,17,18,21,22,23,24,25,26,27,28,29,30,31,32,],[-14,12,-13,-9,-14,12,12,12,12,-5,-6,-7,-8,-10,12,12,-11,-12,]),'/':([2,3,8,16,17,18,21,22,23,24,25,26,27,28,29,30,31,32,],[-14,13,-13,-9,-14,13,13,13,13,-5,-6,-7,-8,-10,13,13,-11,-12,]),'FLOORDIV':([2,3,8,16,17,18,21,22,23,24,25,26,27,28,29,30,31,32,],[-14,14,-13,-9,-14,14,14,14,14,-5,-6,-7,-8,-10,14,14,-11,-12,]),'%':([2,3,8,16,17,18,21,22,23,24,25,26,27,28,29,30,31,32,],[-14,15,-13,-9,-14,15,15,15,15,-5,-6,-7,-8,-10,15,15,-11,-12,]),')':([8,16,17,18,22,23,24,25,26,27,28,29,30,31,32,],[-13,-9,-14,28,-3,-4,-5,-6,-7,-8,-10,31,32,-11,-12,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statement':([0,],[1,]),'expression':([0,4,5,8,9,10,11,12,13,14,18,],[3,15,17,19,20,21,22,23,24,25,27,]),}
+_lr_goto_items = {'statement':([0,],[1,]),'expression':([0,4,5,9,10,11,12,13,14,15,19,20,],[3,16,18,21,22,23,24,25,26,27,29,30,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,17 +27,18 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> statement","S'",1,None,None,None),
-  ('statement -> NAME = expression','statement',3,'p_statement_assign','calc.py',62),
-  ('statement -> expression','statement',1,'p_statement_expr','calc.py',67),
-  ('expression -> expression + expression','expression',3,'p_expression_binop','calc.py',72),
-  ('expression -> expression - expression','expression',3,'p_expression_binop','calc.py',73),
-  ('expression -> expression * expression','expression',3,'p_expression_binop','calc.py',74),
-  ('expression -> expression / expression','expression',3,'p_expression_binop','calc.py',75),
-  ('expression -> expression FLOORDIV expression','expression',3,'p_expression_binop','calc.py',76),
-  ('expression -> expression % expression','expression',3,'p_expression_binop','calc.py',77),
-  ('expression -> - expression','expression',2,'p_expression_uminus','calc.py',94),
-  ('expression -> ( expression )','expression',3,'p_expression_group','calc.py',99),
-  ('expression -> REAL ( expression )','expression',4,'p_expression_real','calc.py',104),
-  ('expression -> NUMBER','expression',1,'p_expression_number','calc.py',109),
-  ('expression -> NAME','expression',1,'p_expression_name','calc.py',114),
+  ('statement -> NAME = expression','statement',3,'p_statement_assign','calc.py',67),
+  ('statement -> expression','statement',1,'p_statement_expr','calc.py',72),
+  ('expression -> expression + expression','expression',3,'p_expression_binop','calc.py',77),
+  ('expression -> expression - expression','expression',3,'p_expression_binop','calc.py',78),
+  ('expression -> expression * expression','expression',3,'p_expression_binop','calc.py',79),
+  ('expression -> expression / expression','expression',3,'p_expression_binop','calc.py',80),
+  ('expression -> expression FLOORDIV expression','expression',3,'p_expression_binop','calc.py',81),
+  ('expression -> expression % expression','expression',3,'p_expression_binop','calc.py',82),
+  ('expression -> - expression','expression',2,'p_expression_uminus','calc.py',99),
+  ('expression -> ( expression )','expression',3,'p_expression_group','calc.py',104),
+  ('expression -> REAL ( expression )','expression',4,'p_expression_real','calc.py',109),
+  ('expression -> FLOOR ( expression )','expression',4,'p_expression_floor','calc.py',114),
+  ('expression -> NUMBER','expression',1,'p_expression_number','calc.py',119),
+  ('expression -> NAME','expression',1,'p_expression_name','calc.py',124),
 ]

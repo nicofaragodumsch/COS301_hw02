@@ -6,10 +6,15 @@
 # Extended to support real numbers and scientific notation. # [G]
 # Extended to support div (//) and mod (%). # [G]
 # Extended to support real() casting. # [G]
+# Extended to support floor() casting. # [G]
+# Modified to strictly separate stdout results and stderr diagnostics. # [G]
 # -----------------------------------------------------------------------------
 
+import math # [G]
+import sys  # [G]
+
 tokens = (
-    'NAME', 'NUMBER', 'FLOORDIV', 'REAL' # [G]
+    'NAME', 'NUMBER', 'FLOORDIV', 'REAL', 'FLOOR' # [G]
 )
 
 literals = ['=', '+', '-', '*', '/', '(', ')', '%'] # [G]
@@ -20,6 +25,8 @@ def t_NAME(t): # [G]
     r'[a-zA-Z_][a-zA-Z0-9_]*' # [G]
     if t.value == 'real': # [G]
         t.type = 'REAL' # [G]
+    elif t.value == 'floor': # [G]
+        t.type = 'FLOOR' # [G]
     return t # [G]
 
 t_FLOORDIV = r'//' # [G]
@@ -40,7 +47,7 @@ def t_newline(t):
     t.lexer.lineno += t.value.count("\n")
 
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
+    print("Illegal character '%s'" % t.value[0], file=sys.stderr) # [G]
     t.lexer.skip(1)
 
 # Build the lexer
@@ -65,7 +72,7 @@ def p_statement_assign(p):
 
 def p_statement_expr(p):
     'statement : expression'
-    print(p[1])
+    print(p[1]) # This remains unchanged because it is an evaluation result
 
 
 def p_expression_binop(p):
@@ -105,6 +112,11 @@ def p_expression_real(p): # [G]
     p[0] = float(p[3]) # [G]
 
 
+def p_expression_floor(p): # [G]
+    "expression : FLOOR '(' expression ')'" # [G]
+    p[0] = math.floor(p[3]) # [G]
+
+
 def p_expression_number(p):
     "expression : NUMBER"
     p[0] = p[1]
@@ -115,22 +127,22 @@ def p_expression_name(p):
     try:
         p[0] = names[p[1]]
     except LookupError:
-        print("Undefined name '%s'" % p[1])
+        print("Undefined name '%s'" % p[1], file=sys.stderr) # [G]
         p[0] = 0
 
 
 def p_error(p):
     if p:
-        print("Syntax error at '%s'" % p.value)
+        print("Syntax error at '%s'" % p.value, file=sys.stderr) # [G]
     else:
-        print("Syntax error at EOF")
+        print("Syntax error at EOF", file=sys.stderr) # [G]
 
 import ply.yacc as yacc
 parser = yacc.yacc()
 
 while True:
     try:
-        s = input('calc > ')
+        s = input() # [G] Removed the 'calc > ' prompt string
     except EOFError:
         break
     if not s:

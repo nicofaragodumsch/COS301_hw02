@@ -4,17 +4,19 @@
 # A simple calculator with variables.   This is from O'Reilly's
 # "Lex and Yacc", p. 63.
 # Extended to support real numbers and scientific notation. # [G]
+# Extended to support div (//) and mod (%). # [G]
 # -----------------------------------------------------------------------------
 
 tokens = (
-    'NAME', 'NUMBER',
+    'NAME', 'NUMBER', 'FLOORDIV' # [G]
 )
 
-literals = ['=', '+', '-', '*', '/', '(', ')']
+literals = ['=', '+', '-', '*', '/', '(', ')', '%'] # [G]
 
 # Tokens
 
 t_NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
+t_FLOORDIV = r'//' # [G]
 
 
 def t_NUMBER(t):
@@ -43,7 +45,7 @@ lexer = lex.lex()
 
 precedence = (
     ('left', '+', '-'),
-    ('left', '*', '/'),
+    ('left', '*', '/', 'FLOORDIV', '%'), # [G]
     ('right', 'UMINUS'),
 )
 
@@ -64,7 +66,10 @@ def p_expression_binop(p):
     '''expression : expression '+' expression
                   | expression '-' expression
                   | expression '*' expression
-                  | expression '/' expression'''
+                  | expression '/' expression
+                  | expression FLOORDIV expression
+                  | expression '%' expression'''
+    # Note: FLOORDIV and '%' grammar rules were added to the docstring above # [G]
     if p[2] == '+':
         p[0] = p[1] + p[3]
     elif p[2] == '-':
@@ -73,6 +78,10 @@ def p_expression_binop(p):
         p[0] = p[1] * p[3]
     elif p[2] == '/':
         p[0] = p[1] / p[3]
+    elif p[2] == '//': # [G]
+        p[0] = p[1] // p[3] # [G]
+    elif p[2] == '%': # [G]
+        p[0] = p[1] % p[3] # [G]
 
 
 def p_expression_uminus(p):

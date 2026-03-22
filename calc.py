@@ -3,6 +3,7 @@
 #
 # A simple calculator with variables.   This is from O'Reilly's
 # "Lex and Yacc", p. 63.
+# Extended to support real numbers and scientific notation. # [G]
 # -----------------------------------------------------------------------------
 
 tokens = (
@@ -17,8 +18,11 @@ t_NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
 
 
 def t_NUMBER(t):
-    r'\d+'
-    t.value = int(t.value)
+    r'\d*\.\d+(?:[eE][-+]?\d+)?|\d+\.\d*(?:[eE][-+]?\d+)?|\d+[eE][-+]?\d+|\d+' # [G]
+    if '.' in t.value or 'e' in t.value or 'E' in t.value: # [G]
+        t.value = float(t.value) # [G]
+    else: # [G]
+        t.value = int(t.value) # [G]
     return t
 
 t_ignore = " \t"

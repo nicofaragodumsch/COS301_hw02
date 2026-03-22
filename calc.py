@@ -5,17 +5,23 @@
 # "Lex and Yacc", p. 63.
 # Extended to support real numbers and scientific notation. # [G]
 # Extended to support div (//) and mod (%). # [G]
+# Extended to support real() casting. # [G]
 # -----------------------------------------------------------------------------
 
 tokens = (
-    'NAME', 'NUMBER', 'FLOORDIV' # [G]
+    'NAME', 'NUMBER', 'FLOORDIV', 'REAL' # [G]
 )
 
 literals = ['=', '+', '-', '*', '/', '(', ')', '%'] # [G]
 
 # Tokens
 
-t_NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
+def t_NAME(t): # [G]
+    r'[a-zA-Z_][a-zA-Z0-9_]*' # [G]
+    if t.value == 'real': # [G]
+        t.type = 'REAL' # [G]
+    return t # [G]
+
 t_FLOORDIV = r'//' # [G]
 
 
@@ -92,6 +98,11 @@ def p_expression_uminus(p):
 def p_expression_group(p):
     "expression : '(' expression ')'"
     p[0] = p[2]
+
+
+def p_expression_real(p): # [G]
+    "expression : REAL '(' expression ')'" # [G]
+    p[0] = float(p[3]) # [G]
 
 
 def p_expression_number(p):

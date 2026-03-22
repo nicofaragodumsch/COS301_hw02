@@ -9,6 +9,7 @@
 # Extended to support floor() casting. # [G]
 # Modified to strictly separate stdout results and stderr diagnostics. # [G]
 # Modified to strictly abort evaluation on syntax and lexer errors. # [G]
+# Modified to enforce strict type-matching on arithmetic operators. # [G]
 # -----------------------------------------------------------------------------
 
 import math # [G]
@@ -85,18 +86,23 @@ def p_expression_binop(p):
                   | expression FLOORDIV expression
                   | expression '%' expression'''
     # Note: FLOORDIV and '%' grammar rules were added to the docstring above # [G]
-    if p[2] == '+':
-        p[0] = p[1] + p[3]
-    elif p[2] == '-':
-        p[0] = p[1] - p[3]
-    elif p[2] == '*':
-        p[0] = p[1] * p[3]
-    elif p[2] == '/':
-        p[0] = p[1] / p[3]
-    elif p[2] == '//': # [G]
-        p[0] = p[1] // p[3] # [G]
-    elif p[2] == '%': # [G]
-        p[0] = p[1] % p[3] # [G]
+    
+    if type(p[1]) != type(p[3]): # [G]
+        print(f"type error: mismatched types {type(p[1]).__name__} and {type(p[3]).__name__} for '{p[2]}'", file=sys.stderr) # [G]
+        p[0] = 0 # [G] Return 0 for the erroneous expression
+    else: # [G]
+        if p[2] == '+': # [G]
+            p[0] = p[1] + p[3] # [G]
+        elif p[2] == '-': # [G]
+            p[0] = p[1] - p[3] # [G]
+        elif p[2] == '*': # [G]
+            p[0] = p[1] * p[3] # [G]
+        elif p[2] == '/': # [G]
+            p[0] = p[1] / p[3] # [G]
+        elif p[2] == '//': # [G]
+            p[0] = p[1] // p[3] # [G]
+        elif p[2] == '%': # [G]
+            p[0] = p[1] % p[3] # [G]
 
 
 def p_expression_uminus(p):

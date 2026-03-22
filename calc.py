@@ -8,6 +8,7 @@
 # Extended to support real() casting. # [G]
 # Extended to support floor() casting. # [G]
 # Modified to strictly separate stdout results and stderr diagnostics. # [G]
+# Modified to strictly abort evaluation on syntax and lexer errors. # [G]
 # -----------------------------------------------------------------------------
 
 import math # [G]
@@ -49,6 +50,7 @@ def t_newline(t):
 def t_error(t):
     print("Illegal character '%s'" % t.value[0], file=sys.stderr) # [G]
     t.lexer.skip(1)
+    raise SyntaxError # [G] Abort lexical analysis immediately to prevent cascading parser errors
 
 # Build the lexer
 import ply.lex as lex
@@ -72,7 +74,7 @@ def p_statement_assign(p):
 
 def p_statement_expr(p):
     'statement : expression'
-    print(p[1]) # This remains unchanged because it is an evaluation result
+    print(p[1])
 
 
 def p_expression_binop(p):
@@ -136,6 +138,8 @@ def p_error(p):
         print("Syntax error at '%s'" % p.value, file=sys.stderr) # [G]
     else:
         print("Syntax error at EOF", file=sys.stderr) # [G]
+    raise SyntaxError # [G] Tell the parser to abort immediately
+
 
 import ply.yacc as yacc
 parser = yacc.yacc()
@@ -147,4 +151,8 @@ while True:
         break
     if not s:
         continue
-    yacc.parse(s)
+    
+    try: # [G] Catch the abort signal from the parser and lexer
+        yacc.parse(s)
+    except SyntaxError: # [G]
+        pass # [G] Ignore the rest of the line and wait for the next input

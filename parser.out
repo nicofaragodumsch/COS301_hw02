@@ -4,40 +4,44 @@ Grammar
 
 Rule 0     S' -> statement
 Rule 1     statement -> NAME = expression
-Rule 2     statement -> expression
-Rule 3     expression -> expression + expression
-Rule 4     expression -> expression - expression
-Rule 5     expression -> expression * expression
-Rule 6     expression -> expression / expression
-Rule 7     expression -> expression FLOORDIV expression
-Rule 8     expression -> expression % expression
-Rule 9     expression -> - expression
-Rule 10    expression -> ( expression )
-Rule 11    expression -> REAL ( expression )
-Rule 12    expression -> FLOOR ( expression )
-Rule 13    expression -> NUMBER
-Rule 14    expression -> NAME
+Rule 2     statement -> REAL = expression
+Rule 3     statement -> FLOOR = expression
+Rule 4     statement -> expression
+Rule 5     expression -> expression + expression
+Rule 6     expression -> expression - expression
+Rule 7     expression -> expression * expression
+Rule 8     expression -> expression / expression
+Rule 9     expression -> expression FLOORDIV expression
+Rule 10    expression -> expression % expression
+Rule 11    expression -> - expression
+Rule 12    expression -> ( expression )
+Rule 13    expression -> REAL ( expression )
+Rule 14    expression -> FLOOR ( expression )
+Rule 15    expression -> NUMBER
+Rule 16    expression -> NAME
+Rule 17    expression -> REAL
+Rule 18    expression -> FLOOR
 
 Terminals, with rules where they appear
 
-%                    : 8
-(                    : 10 11 12
-)                    : 10 11 12
-*                    : 5
-+                    : 3
--                    : 4 9
-/                    : 6
-=                    : 1
-FLOOR                : 12
-FLOORDIV             : 7
-NAME                 : 1 14
-NUMBER               : 13
-REAL                 : 11
+%                    : 10
+(                    : 12 13 14
+)                    : 12 13 14
+*                    : 7
++                    : 5
+-                    : 6 11
+/                    : 8
+=                    : 1 2 3
+FLOOR                : 3 14 18
+FLOORDIV             : 9
+NAME                 : 1 16
+NUMBER               : 15
+REAL                 : 2 13 17
 error                : 
 
 Nonterminals, with rules where they appear
 
-expression           : 1 2 3 3 4 4 5 5 6 6 7 7 8 8 9 10 11 12
+expression           : 1 2 3 4 5 5 6 6 7 7 8 8 9 9 10 10 11 12 13 14
 statement            : 0
 
 Parsing method: LALR
@@ -46,25 +50,29 @@ state 0
 
     (0) S' -> . statement
     (1) statement -> . NAME = expression
-    (2) statement -> . expression
-    (3) expression -> . expression + expression
-    (4) expression -> . expression - expression
-    (5) expression -> . expression * expression
-    (6) expression -> . expression / expression
-    (7) expression -> . expression FLOORDIV expression
-    (8) expression -> . expression % expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . REAL ( expression )
-    (12) expression -> . FLOOR ( expression )
-    (13) expression -> . NUMBER
-    (14) expression -> . NAME
+    (2) statement -> . REAL = expression
+    (3) statement -> . FLOOR = expression
+    (4) statement -> . expression
+    (5) expression -> . expression + expression
+    (6) expression -> . expression - expression
+    (7) expression -> . expression * expression
+    (8) expression -> . expression / expression
+    (9) expression -> . expression FLOORDIV expression
+    (10) expression -> . expression % expression
+    (11) expression -> . - expression
+    (12) expression -> . ( expression )
+    (13) expression -> . REAL ( expression )
+    (14) expression -> . FLOOR ( expression )
+    (15) expression -> . NUMBER
+    (16) expression -> . NAME
+    (17) expression -> . REAL
+    (18) expression -> . FLOOR
 
     NAME            shift and go to state 2
-    -               shift and go to state 4
-    (               shift and go to state 5
-    REAL            shift and go to state 6
-    FLOOR           shift and go to state 7
+    REAL            shift and go to state 4
+    FLOOR           shift and go to state 5
+    -               shift and go to state 6
+    (               shift and go to state 7
     NUMBER          shift and go to state 8
 
     statement                      shift and go to state 1
@@ -79,29 +87,29 @@ state 1
 state 2
 
     (1) statement -> NAME . = expression
-    (14) expression -> NAME .
+    (16) expression -> NAME .
 
     =               shift and go to state 9
-    +               reduce using rule 14 (expression -> NAME .)
-    -               reduce using rule 14 (expression -> NAME .)
-    *               reduce using rule 14 (expression -> NAME .)
-    /               reduce using rule 14 (expression -> NAME .)
-    FLOORDIV        reduce using rule 14 (expression -> NAME .)
-    %               reduce using rule 14 (expression -> NAME .)
-    $end            reduce using rule 14 (expression -> NAME .)
+    +               reduce using rule 16 (expression -> NAME .)
+    -               reduce using rule 16 (expression -> NAME .)
+    *               reduce using rule 16 (expression -> NAME .)
+    /               reduce using rule 16 (expression -> NAME .)
+    FLOORDIV        reduce using rule 16 (expression -> NAME .)
+    %               reduce using rule 16 (expression -> NAME .)
+    $end            reduce using rule 16 (expression -> NAME .)
 
 
 state 3
 
-    (2) statement -> expression .
-    (3) expression -> expression . + expression
-    (4) expression -> expression . - expression
-    (5) expression -> expression . * expression
-    (6) expression -> expression . / expression
-    (7) expression -> expression . FLOORDIV expression
-    (8) expression -> expression . % expression
+    (4) statement -> expression .
+    (5) expression -> expression . + expression
+    (6) expression -> expression . - expression
+    (7) expression -> expression . * expression
+    (8) expression -> expression . / expression
+    (9) expression -> expression . FLOORDIV expression
+    (10) expression -> expression . % expression
 
-    $end            reduce using rule 2 (statement -> expression .)
+    $end            reduce using rule 4 (statement -> expression .)
     +               shift and go to state 10
     -               shift and go to state 11
     *               shift and go to state 12
@@ -112,275 +120,421 @@ state 3
 
 state 4
 
-    (9) expression -> - . expression
-    (3) expression -> . expression + expression
-    (4) expression -> . expression - expression
-    (5) expression -> . expression * expression
-    (6) expression -> . expression / expression
-    (7) expression -> . expression FLOORDIV expression
-    (8) expression -> . expression % expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . REAL ( expression )
-    (12) expression -> . FLOOR ( expression )
-    (13) expression -> . NUMBER
-    (14) expression -> . NAME
+    (2) statement -> REAL . = expression
+    (13) expression -> REAL . ( expression )
+    (17) expression -> REAL .
 
-    -               shift and go to state 4
-    (               shift and go to state 5
-    REAL            shift and go to state 6
-    FLOOR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    NAME            shift and go to state 17
+    =               shift and go to state 16
+    (               shift and go to state 17
+    +               reduce using rule 17 (expression -> REAL .)
+    -               reduce using rule 17 (expression -> REAL .)
+    *               reduce using rule 17 (expression -> REAL .)
+    /               reduce using rule 17 (expression -> REAL .)
+    FLOORDIV        reduce using rule 17 (expression -> REAL .)
+    %               reduce using rule 17 (expression -> REAL .)
+    $end            reduce using rule 17 (expression -> REAL .)
 
-    expression                     shift and go to state 16
 
 state 5
 
-    (10) expression -> ( . expression )
-    (3) expression -> . expression + expression
-    (4) expression -> . expression - expression
-    (5) expression -> . expression * expression
-    (6) expression -> . expression / expression
-    (7) expression -> . expression FLOORDIV expression
-    (8) expression -> . expression % expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . REAL ( expression )
-    (12) expression -> . FLOOR ( expression )
-    (13) expression -> . NUMBER
-    (14) expression -> . NAME
+    (3) statement -> FLOOR . = expression
+    (14) expression -> FLOOR . ( expression )
+    (18) expression -> FLOOR .
 
-    -               shift and go to state 4
-    (               shift and go to state 5
-    REAL            shift and go to state 6
-    FLOOR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    NAME            shift and go to state 17
+    =               shift and go to state 18
+    (               shift and go to state 19
+    +               reduce using rule 18 (expression -> FLOOR .)
+    -               reduce using rule 18 (expression -> FLOOR .)
+    *               reduce using rule 18 (expression -> FLOOR .)
+    /               reduce using rule 18 (expression -> FLOOR .)
+    FLOORDIV        reduce using rule 18 (expression -> FLOOR .)
+    %               reduce using rule 18 (expression -> FLOOR .)
+    $end            reduce using rule 18 (expression -> FLOOR .)
 
-    expression                     shift and go to state 18
 
 state 6
 
-    (11) expression -> REAL . ( expression )
+    (11) expression -> - . expression
+    (5) expression -> . expression + expression
+    (6) expression -> . expression - expression
+    (7) expression -> . expression * expression
+    (8) expression -> . expression / expression
+    (9) expression -> . expression FLOORDIV expression
+    (10) expression -> . expression % expression
+    (11) expression -> . - expression
+    (12) expression -> . ( expression )
+    (13) expression -> . REAL ( expression )
+    (14) expression -> . FLOOR ( expression )
+    (15) expression -> . NUMBER
+    (16) expression -> . NAME
+    (17) expression -> . REAL
+    (18) expression -> . FLOOR
 
-    (               shift and go to state 19
+    -               shift and go to state 6
+    (               shift and go to state 7
+    REAL            shift and go to state 21
+    FLOOR           shift and go to state 22
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 23
 
+    expression                     shift and go to state 20
 
 state 7
 
-    (12) expression -> FLOOR . ( expression )
+    (12) expression -> ( . expression )
+    (5) expression -> . expression + expression
+    (6) expression -> . expression - expression
+    (7) expression -> . expression * expression
+    (8) expression -> . expression / expression
+    (9) expression -> . expression FLOORDIV expression
+    (10) expression -> . expression % expression
+    (11) expression -> . - expression
+    (12) expression -> . ( expression )
+    (13) expression -> . REAL ( expression )
+    (14) expression -> . FLOOR ( expression )
+    (15) expression -> . NUMBER
+    (16) expression -> . NAME
+    (17) expression -> . REAL
+    (18) expression -> . FLOOR
 
-    (               shift and go to state 20
+    -               shift and go to state 6
+    (               shift and go to state 7
+    REAL            shift and go to state 21
+    FLOOR           shift and go to state 22
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 23
 
+    expression                     shift and go to state 24
 
 state 8
 
-    (13) expression -> NUMBER .
+    (15) expression -> NUMBER .
 
-    +               reduce using rule 13 (expression -> NUMBER .)
-    -               reduce using rule 13 (expression -> NUMBER .)
-    *               reduce using rule 13 (expression -> NUMBER .)
-    /               reduce using rule 13 (expression -> NUMBER .)
-    FLOORDIV        reduce using rule 13 (expression -> NUMBER .)
-    %               reduce using rule 13 (expression -> NUMBER .)
-    $end            reduce using rule 13 (expression -> NUMBER .)
-    )               reduce using rule 13 (expression -> NUMBER .)
+    +               reduce using rule 15 (expression -> NUMBER .)
+    -               reduce using rule 15 (expression -> NUMBER .)
+    *               reduce using rule 15 (expression -> NUMBER .)
+    /               reduce using rule 15 (expression -> NUMBER .)
+    FLOORDIV        reduce using rule 15 (expression -> NUMBER .)
+    %               reduce using rule 15 (expression -> NUMBER .)
+    $end            reduce using rule 15 (expression -> NUMBER .)
+    )               reduce using rule 15 (expression -> NUMBER .)
 
 
 state 9
 
     (1) statement -> NAME = . expression
-    (3) expression -> . expression + expression
-    (4) expression -> . expression - expression
-    (5) expression -> . expression * expression
-    (6) expression -> . expression / expression
-    (7) expression -> . expression FLOORDIV expression
-    (8) expression -> . expression % expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . REAL ( expression )
-    (12) expression -> . FLOOR ( expression )
-    (13) expression -> . NUMBER
-    (14) expression -> . NAME
+    (5) expression -> . expression + expression
+    (6) expression -> . expression - expression
+    (7) expression -> . expression * expression
+    (8) expression -> . expression / expression
+    (9) expression -> . expression FLOORDIV expression
+    (10) expression -> . expression % expression
+    (11) expression -> . - expression
+    (12) expression -> . ( expression )
+    (13) expression -> . REAL ( expression )
+    (14) expression -> . FLOOR ( expression )
+    (15) expression -> . NUMBER
+    (16) expression -> . NAME
+    (17) expression -> . REAL
+    (18) expression -> . FLOOR
 
-    -               shift and go to state 4
-    (               shift and go to state 5
-    REAL            shift and go to state 6
-    FLOOR           shift and go to state 7
+    -               shift and go to state 6
+    (               shift and go to state 7
+    REAL            shift and go to state 21
+    FLOOR           shift and go to state 22
     NUMBER          shift and go to state 8
-    NAME            shift and go to state 17
-
-    expression                     shift and go to state 21
-
-state 10
-
-    (3) expression -> expression + . expression
-    (3) expression -> . expression + expression
-    (4) expression -> . expression - expression
-    (5) expression -> . expression * expression
-    (6) expression -> . expression / expression
-    (7) expression -> . expression FLOORDIV expression
-    (8) expression -> . expression % expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . REAL ( expression )
-    (12) expression -> . FLOOR ( expression )
-    (13) expression -> . NUMBER
-    (14) expression -> . NAME
-
-    -               shift and go to state 4
-    (               shift and go to state 5
-    REAL            shift and go to state 6
-    FLOOR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    NAME            shift and go to state 17
-
-    expression                     shift and go to state 22
-
-state 11
-
-    (4) expression -> expression - . expression
-    (3) expression -> . expression + expression
-    (4) expression -> . expression - expression
-    (5) expression -> . expression * expression
-    (6) expression -> . expression / expression
-    (7) expression -> . expression FLOORDIV expression
-    (8) expression -> . expression % expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . REAL ( expression )
-    (12) expression -> . FLOOR ( expression )
-    (13) expression -> . NUMBER
-    (14) expression -> . NAME
-
-    -               shift and go to state 4
-    (               shift and go to state 5
-    REAL            shift and go to state 6
-    FLOOR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    NAME            shift and go to state 17
-
-    expression                     shift and go to state 23
-
-state 12
-
-    (5) expression -> expression * . expression
-    (3) expression -> . expression + expression
-    (4) expression -> . expression - expression
-    (5) expression -> . expression * expression
-    (6) expression -> . expression / expression
-    (7) expression -> . expression FLOORDIV expression
-    (8) expression -> . expression % expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . REAL ( expression )
-    (12) expression -> . FLOOR ( expression )
-    (13) expression -> . NUMBER
-    (14) expression -> . NAME
-
-    -               shift and go to state 4
-    (               shift and go to state 5
-    REAL            shift and go to state 6
-    FLOOR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    NAME            shift and go to state 17
-
-    expression                     shift and go to state 24
-
-state 13
-
-    (6) expression -> expression / . expression
-    (3) expression -> . expression + expression
-    (4) expression -> . expression - expression
-    (5) expression -> . expression * expression
-    (6) expression -> . expression / expression
-    (7) expression -> . expression FLOORDIV expression
-    (8) expression -> . expression % expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . REAL ( expression )
-    (12) expression -> . FLOOR ( expression )
-    (13) expression -> . NUMBER
-    (14) expression -> . NAME
-
-    -               shift and go to state 4
-    (               shift and go to state 5
-    REAL            shift and go to state 6
-    FLOOR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    NAME            shift and go to state 17
+    NAME            shift and go to state 23
 
     expression                     shift and go to state 25
 
-state 14
+state 10
 
-    (7) expression -> expression FLOORDIV . expression
-    (3) expression -> . expression + expression
-    (4) expression -> . expression - expression
-    (5) expression -> . expression * expression
-    (6) expression -> . expression / expression
-    (7) expression -> . expression FLOORDIV expression
-    (8) expression -> . expression % expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . REAL ( expression )
-    (12) expression -> . FLOOR ( expression )
-    (13) expression -> . NUMBER
-    (14) expression -> . NAME
+    (5) expression -> expression + . expression
+    (5) expression -> . expression + expression
+    (6) expression -> . expression - expression
+    (7) expression -> . expression * expression
+    (8) expression -> . expression / expression
+    (9) expression -> . expression FLOORDIV expression
+    (10) expression -> . expression % expression
+    (11) expression -> . - expression
+    (12) expression -> . ( expression )
+    (13) expression -> . REAL ( expression )
+    (14) expression -> . FLOOR ( expression )
+    (15) expression -> . NUMBER
+    (16) expression -> . NAME
+    (17) expression -> . REAL
+    (18) expression -> . FLOOR
 
-    -               shift and go to state 4
-    (               shift and go to state 5
-    REAL            shift and go to state 6
-    FLOOR           shift and go to state 7
+    -               shift and go to state 6
+    (               shift and go to state 7
+    REAL            shift and go to state 21
+    FLOOR           shift and go to state 22
     NUMBER          shift and go to state 8
-    NAME            shift and go to state 17
+    NAME            shift and go to state 23
 
     expression                     shift and go to state 26
 
-state 15
+state 11
 
-    (8) expression -> expression % . expression
-    (3) expression -> . expression + expression
-    (4) expression -> . expression - expression
-    (5) expression -> . expression * expression
-    (6) expression -> . expression / expression
-    (7) expression -> . expression FLOORDIV expression
-    (8) expression -> . expression % expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . REAL ( expression )
-    (12) expression -> . FLOOR ( expression )
-    (13) expression -> . NUMBER
-    (14) expression -> . NAME
+    (6) expression -> expression - . expression
+    (5) expression -> . expression + expression
+    (6) expression -> . expression - expression
+    (7) expression -> . expression * expression
+    (8) expression -> . expression / expression
+    (9) expression -> . expression FLOORDIV expression
+    (10) expression -> . expression % expression
+    (11) expression -> . - expression
+    (12) expression -> . ( expression )
+    (13) expression -> . REAL ( expression )
+    (14) expression -> . FLOOR ( expression )
+    (15) expression -> . NUMBER
+    (16) expression -> . NAME
+    (17) expression -> . REAL
+    (18) expression -> . FLOOR
 
-    -               shift and go to state 4
-    (               shift and go to state 5
-    REAL            shift and go to state 6
-    FLOOR           shift and go to state 7
+    -               shift and go to state 6
+    (               shift and go to state 7
+    REAL            shift and go to state 21
+    FLOOR           shift and go to state 22
     NUMBER          shift and go to state 8
-    NAME            shift and go to state 17
+    NAME            shift and go to state 23
 
     expression                     shift and go to state 27
 
+state 12
+
+    (7) expression -> expression * . expression
+    (5) expression -> . expression + expression
+    (6) expression -> . expression - expression
+    (7) expression -> . expression * expression
+    (8) expression -> . expression / expression
+    (9) expression -> . expression FLOORDIV expression
+    (10) expression -> . expression % expression
+    (11) expression -> . - expression
+    (12) expression -> . ( expression )
+    (13) expression -> . REAL ( expression )
+    (14) expression -> . FLOOR ( expression )
+    (15) expression -> . NUMBER
+    (16) expression -> . NAME
+    (17) expression -> . REAL
+    (18) expression -> . FLOOR
+
+    -               shift and go to state 6
+    (               shift and go to state 7
+    REAL            shift and go to state 21
+    FLOOR           shift and go to state 22
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 23
+
+    expression                     shift and go to state 28
+
+state 13
+
+    (8) expression -> expression / . expression
+    (5) expression -> . expression + expression
+    (6) expression -> . expression - expression
+    (7) expression -> . expression * expression
+    (8) expression -> . expression / expression
+    (9) expression -> . expression FLOORDIV expression
+    (10) expression -> . expression % expression
+    (11) expression -> . - expression
+    (12) expression -> . ( expression )
+    (13) expression -> . REAL ( expression )
+    (14) expression -> . FLOOR ( expression )
+    (15) expression -> . NUMBER
+    (16) expression -> . NAME
+    (17) expression -> . REAL
+    (18) expression -> . FLOOR
+
+    -               shift and go to state 6
+    (               shift and go to state 7
+    REAL            shift and go to state 21
+    FLOOR           shift and go to state 22
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 23
+
+    expression                     shift and go to state 29
+
+state 14
+
+    (9) expression -> expression FLOORDIV . expression
+    (5) expression -> . expression + expression
+    (6) expression -> . expression - expression
+    (7) expression -> . expression * expression
+    (8) expression -> . expression / expression
+    (9) expression -> . expression FLOORDIV expression
+    (10) expression -> . expression % expression
+    (11) expression -> . - expression
+    (12) expression -> . ( expression )
+    (13) expression -> . REAL ( expression )
+    (14) expression -> . FLOOR ( expression )
+    (15) expression -> . NUMBER
+    (16) expression -> . NAME
+    (17) expression -> . REAL
+    (18) expression -> . FLOOR
+
+    -               shift and go to state 6
+    (               shift and go to state 7
+    REAL            shift and go to state 21
+    FLOOR           shift and go to state 22
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 23
+
+    expression                     shift and go to state 30
+
+state 15
+
+    (10) expression -> expression % . expression
+    (5) expression -> . expression + expression
+    (6) expression -> . expression - expression
+    (7) expression -> . expression * expression
+    (8) expression -> . expression / expression
+    (9) expression -> . expression FLOORDIV expression
+    (10) expression -> . expression % expression
+    (11) expression -> . - expression
+    (12) expression -> . ( expression )
+    (13) expression -> . REAL ( expression )
+    (14) expression -> . FLOOR ( expression )
+    (15) expression -> . NUMBER
+    (16) expression -> . NAME
+    (17) expression -> . REAL
+    (18) expression -> . FLOOR
+
+    -               shift and go to state 6
+    (               shift and go to state 7
+    REAL            shift and go to state 21
+    FLOOR           shift and go to state 22
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 23
+
+    expression                     shift and go to state 31
+
 state 16
 
-    (9) expression -> - expression .
-    (3) expression -> expression . + expression
-    (4) expression -> expression . - expression
-    (5) expression -> expression . * expression
-    (6) expression -> expression . / expression
-    (7) expression -> expression . FLOORDIV expression
-    (8) expression -> expression . % expression
+    (2) statement -> REAL = . expression
+    (5) expression -> . expression + expression
+    (6) expression -> . expression - expression
+    (7) expression -> . expression * expression
+    (8) expression -> . expression / expression
+    (9) expression -> . expression FLOORDIV expression
+    (10) expression -> . expression % expression
+    (11) expression -> . - expression
+    (12) expression -> . ( expression )
+    (13) expression -> . REAL ( expression )
+    (14) expression -> . FLOOR ( expression )
+    (15) expression -> . NUMBER
+    (16) expression -> . NAME
+    (17) expression -> . REAL
+    (18) expression -> . FLOOR
 
-    +               reduce using rule 9 (expression -> - expression .)
-    -               reduce using rule 9 (expression -> - expression .)
-    *               reduce using rule 9 (expression -> - expression .)
-    /               reduce using rule 9 (expression -> - expression .)
-    FLOORDIV        reduce using rule 9 (expression -> - expression .)
-    %               reduce using rule 9 (expression -> - expression .)
-    $end            reduce using rule 9 (expression -> - expression .)
-    )               reduce using rule 9 (expression -> - expression .)
+    -               shift and go to state 6
+    (               shift and go to state 7
+    REAL            shift and go to state 21
+    FLOOR           shift and go to state 22
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 23
+
+    expression                     shift and go to state 32
+
+state 17
+
+    (13) expression -> REAL ( . expression )
+    (5) expression -> . expression + expression
+    (6) expression -> . expression - expression
+    (7) expression -> . expression * expression
+    (8) expression -> . expression / expression
+    (9) expression -> . expression FLOORDIV expression
+    (10) expression -> . expression % expression
+    (11) expression -> . - expression
+    (12) expression -> . ( expression )
+    (13) expression -> . REAL ( expression )
+    (14) expression -> . FLOOR ( expression )
+    (15) expression -> . NUMBER
+    (16) expression -> . NAME
+    (17) expression -> . REAL
+    (18) expression -> . FLOOR
+
+    -               shift and go to state 6
+    (               shift and go to state 7
+    REAL            shift and go to state 21
+    FLOOR           shift and go to state 22
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 23
+
+    expression                     shift and go to state 33
+
+state 18
+
+    (3) statement -> FLOOR = . expression
+    (5) expression -> . expression + expression
+    (6) expression -> . expression - expression
+    (7) expression -> . expression * expression
+    (8) expression -> . expression / expression
+    (9) expression -> . expression FLOORDIV expression
+    (10) expression -> . expression % expression
+    (11) expression -> . - expression
+    (12) expression -> . ( expression )
+    (13) expression -> . REAL ( expression )
+    (14) expression -> . FLOOR ( expression )
+    (15) expression -> . NUMBER
+    (16) expression -> . NAME
+    (17) expression -> . REAL
+    (18) expression -> . FLOOR
+
+    -               shift and go to state 6
+    (               shift and go to state 7
+    REAL            shift and go to state 21
+    FLOOR           shift and go to state 22
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 23
+
+    expression                     shift and go to state 34
+
+state 19
+
+    (14) expression -> FLOOR ( . expression )
+    (5) expression -> . expression + expression
+    (6) expression -> . expression - expression
+    (7) expression -> . expression * expression
+    (8) expression -> . expression / expression
+    (9) expression -> . expression FLOORDIV expression
+    (10) expression -> . expression % expression
+    (11) expression -> . - expression
+    (12) expression -> . ( expression )
+    (13) expression -> . REAL ( expression )
+    (14) expression -> . FLOOR ( expression )
+    (15) expression -> . NUMBER
+    (16) expression -> . NAME
+    (17) expression -> . REAL
+    (18) expression -> . FLOOR
+
+    -               shift and go to state 6
+    (               shift and go to state 7
+    REAL            shift and go to state 21
+    FLOOR           shift and go to state 22
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 23
+
+    expression                     shift and go to state 35
+
+state 20
+
+    (11) expression -> - expression .
+    (5) expression -> expression . + expression
+    (6) expression -> expression . - expression
+    (7) expression -> expression . * expression
+    (8) expression -> expression . / expression
+    (9) expression -> expression . FLOORDIV expression
+    (10) expression -> expression . % expression
+
+    +               reduce using rule 11 (expression -> - expression .)
+    -               reduce using rule 11 (expression -> - expression .)
+    *               reduce using rule 11 (expression -> - expression .)
+    /               reduce using rule 11 (expression -> - expression .)
+    FLOORDIV        reduce using rule 11 (expression -> - expression .)
+    %               reduce using rule 11 (expression -> - expression .)
+    $end            reduce using rule 11 (expression -> - expression .)
+    )               reduce using rule 11 (expression -> - expression .)
 
   ! +               [ shift and go to state 10 ]
   ! -               [ shift and go to state 11 ]
@@ -390,31 +544,63 @@ state 16
   ! %               [ shift and go to state 15 ]
 
 
-state 17
+state 21
 
-    (14) expression -> NAME .
+    (13) expression -> REAL . ( expression )
+    (17) expression -> REAL .
 
-    +               reduce using rule 14 (expression -> NAME .)
-    -               reduce using rule 14 (expression -> NAME .)
-    *               reduce using rule 14 (expression -> NAME .)
-    /               reduce using rule 14 (expression -> NAME .)
-    FLOORDIV        reduce using rule 14 (expression -> NAME .)
-    %               reduce using rule 14 (expression -> NAME .)
-    $end            reduce using rule 14 (expression -> NAME .)
-    )               reduce using rule 14 (expression -> NAME .)
+    (               shift and go to state 17
+    +               reduce using rule 17 (expression -> REAL .)
+    -               reduce using rule 17 (expression -> REAL .)
+    *               reduce using rule 17 (expression -> REAL .)
+    /               reduce using rule 17 (expression -> REAL .)
+    FLOORDIV        reduce using rule 17 (expression -> REAL .)
+    %               reduce using rule 17 (expression -> REAL .)
+    $end            reduce using rule 17 (expression -> REAL .)
+    )               reduce using rule 17 (expression -> REAL .)
 
 
-state 18
+state 22
 
-    (10) expression -> ( expression . )
-    (3) expression -> expression . + expression
-    (4) expression -> expression . - expression
-    (5) expression -> expression . * expression
-    (6) expression -> expression . / expression
-    (7) expression -> expression . FLOORDIV expression
-    (8) expression -> expression . % expression
+    (14) expression -> FLOOR . ( expression )
+    (18) expression -> FLOOR .
 
-    )               shift and go to state 28
+    (               shift and go to state 19
+    +               reduce using rule 18 (expression -> FLOOR .)
+    -               reduce using rule 18 (expression -> FLOOR .)
+    *               reduce using rule 18 (expression -> FLOOR .)
+    /               reduce using rule 18 (expression -> FLOOR .)
+    FLOORDIV        reduce using rule 18 (expression -> FLOOR .)
+    %               reduce using rule 18 (expression -> FLOOR .)
+    $end            reduce using rule 18 (expression -> FLOOR .)
+    )               reduce using rule 18 (expression -> FLOOR .)
+
+
+state 23
+
+    (16) expression -> NAME .
+
+    +               reduce using rule 16 (expression -> NAME .)
+    -               reduce using rule 16 (expression -> NAME .)
+    *               reduce using rule 16 (expression -> NAME .)
+    /               reduce using rule 16 (expression -> NAME .)
+    FLOORDIV        reduce using rule 16 (expression -> NAME .)
+    %               reduce using rule 16 (expression -> NAME .)
+    $end            reduce using rule 16 (expression -> NAME .)
+    )               reduce using rule 16 (expression -> NAME .)
+
+
+state 24
+
+    (12) expression -> ( expression . )
+    (5) expression -> expression . + expression
+    (6) expression -> expression . - expression
+    (7) expression -> expression . * expression
+    (8) expression -> expression . / expression
+    (9) expression -> expression . FLOORDIV expression
+    (10) expression -> expression . % expression
+
+    )               shift and go to state 36
     +               shift and go to state 10
     -               shift and go to state 11
     *               shift and go to state 12
@@ -423,65 +609,15 @@ state 18
     %               shift and go to state 15
 
 
-state 19
-
-    (11) expression -> REAL ( . expression )
-    (3) expression -> . expression + expression
-    (4) expression -> . expression - expression
-    (5) expression -> . expression * expression
-    (6) expression -> . expression / expression
-    (7) expression -> . expression FLOORDIV expression
-    (8) expression -> . expression % expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . REAL ( expression )
-    (12) expression -> . FLOOR ( expression )
-    (13) expression -> . NUMBER
-    (14) expression -> . NAME
-
-    -               shift and go to state 4
-    (               shift and go to state 5
-    REAL            shift and go to state 6
-    FLOOR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    NAME            shift and go to state 17
-
-    expression                     shift and go to state 29
-
-state 20
-
-    (12) expression -> FLOOR ( . expression )
-    (3) expression -> . expression + expression
-    (4) expression -> . expression - expression
-    (5) expression -> . expression * expression
-    (6) expression -> . expression / expression
-    (7) expression -> . expression FLOORDIV expression
-    (8) expression -> . expression % expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . REAL ( expression )
-    (12) expression -> . FLOOR ( expression )
-    (13) expression -> . NUMBER
-    (14) expression -> . NAME
-
-    -               shift and go to state 4
-    (               shift and go to state 5
-    REAL            shift and go to state 6
-    FLOOR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    NAME            shift and go to state 17
-
-    expression                     shift and go to state 30
-
-state 21
+state 25
 
     (1) statement -> NAME = expression .
-    (3) expression -> expression . + expression
-    (4) expression -> expression . - expression
-    (5) expression -> expression . * expression
-    (6) expression -> expression . / expression
-    (7) expression -> expression . FLOORDIV expression
-    (8) expression -> expression . % expression
+    (5) expression -> expression . + expression
+    (6) expression -> expression . - expression
+    (7) expression -> expression . * expression
+    (8) expression -> expression . / expression
+    (9) expression -> expression . FLOORDIV expression
+    (10) expression -> expression . % expression
 
     $end            reduce using rule 1 (statement -> NAME = expression .)
     +               shift and go to state 10
@@ -492,159 +628,78 @@ state 21
     %               shift and go to state 15
 
 
-state 22
-
-    (3) expression -> expression + expression .
-    (3) expression -> expression . + expression
-    (4) expression -> expression . - expression
-    (5) expression -> expression . * expression
-    (6) expression -> expression . / expression
-    (7) expression -> expression . FLOORDIV expression
-    (8) expression -> expression . % expression
-
-    +               reduce using rule 3 (expression -> expression + expression .)
-    -               reduce using rule 3 (expression -> expression + expression .)
-    $end            reduce using rule 3 (expression -> expression + expression .)
-    )               reduce using rule 3 (expression -> expression + expression .)
-    *               shift and go to state 12
-    /               shift and go to state 13
-    FLOORDIV        shift and go to state 14
-    %               shift and go to state 15
-
-  ! *               [ reduce using rule 3 (expression -> expression + expression .) ]
-  ! /               [ reduce using rule 3 (expression -> expression + expression .) ]
-  ! FLOORDIV        [ reduce using rule 3 (expression -> expression + expression .) ]
-  ! %               [ reduce using rule 3 (expression -> expression + expression .) ]
-  ! +               [ shift and go to state 10 ]
-  ! -               [ shift and go to state 11 ]
-
-
-state 23
-
-    (4) expression -> expression - expression .
-    (3) expression -> expression . + expression
-    (4) expression -> expression . - expression
-    (5) expression -> expression . * expression
-    (6) expression -> expression . / expression
-    (7) expression -> expression . FLOORDIV expression
-    (8) expression -> expression . % expression
-
-    +               reduce using rule 4 (expression -> expression - expression .)
-    -               reduce using rule 4 (expression -> expression - expression .)
-    $end            reduce using rule 4 (expression -> expression - expression .)
-    )               reduce using rule 4 (expression -> expression - expression .)
-    *               shift and go to state 12
-    /               shift and go to state 13
-    FLOORDIV        shift and go to state 14
-    %               shift and go to state 15
-
-  ! *               [ reduce using rule 4 (expression -> expression - expression .) ]
-  ! /               [ reduce using rule 4 (expression -> expression - expression .) ]
-  ! FLOORDIV        [ reduce using rule 4 (expression -> expression - expression .) ]
-  ! %               [ reduce using rule 4 (expression -> expression - expression .) ]
-  ! +               [ shift and go to state 10 ]
-  ! -               [ shift and go to state 11 ]
-
-
-state 24
-
-    (5) expression -> expression * expression .
-    (3) expression -> expression . + expression
-    (4) expression -> expression . - expression
-    (5) expression -> expression . * expression
-    (6) expression -> expression . / expression
-    (7) expression -> expression . FLOORDIV expression
-    (8) expression -> expression . % expression
-
-    +               reduce using rule 5 (expression -> expression * expression .)
-    -               reduce using rule 5 (expression -> expression * expression .)
-    *               reduce using rule 5 (expression -> expression * expression .)
-    /               reduce using rule 5 (expression -> expression * expression .)
-    FLOORDIV        reduce using rule 5 (expression -> expression * expression .)
-    %               reduce using rule 5 (expression -> expression * expression .)
-    $end            reduce using rule 5 (expression -> expression * expression .)
-    )               reduce using rule 5 (expression -> expression * expression .)
-
-  ! +               [ shift and go to state 10 ]
-  ! -               [ shift and go to state 11 ]
-  ! *               [ shift and go to state 12 ]
-  ! /               [ shift and go to state 13 ]
-  ! FLOORDIV        [ shift and go to state 14 ]
-  ! %               [ shift and go to state 15 ]
-
-
-state 25
-
-    (6) expression -> expression / expression .
-    (3) expression -> expression . + expression
-    (4) expression -> expression . - expression
-    (5) expression -> expression . * expression
-    (6) expression -> expression . / expression
-    (7) expression -> expression . FLOORDIV expression
-    (8) expression -> expression . % expression
-
-    +               reduce using rule 6 (expression -> expression / expression .)
-    -               reduce using rule 6 (expression -> expression / expression .)
-    *               reduce using rule 6 (expression -> expression / expression .)
-    /               reduce using rule 6 (expression -> expression / expression .)
-    FLOORDIV        reduce using rule 6 (expression -> expression / expression .)
-    %               reduce using rule 6 (expression -> expression / expression .)
-    $end            reduce using rule 6 (expression -> expression / expression .)
-    )               reduce using rule 6 (expression -> expression / expression .)
-
-  ! +               [ shift and go to state 10 ]
-  ! -               [ shift and go to state 11 ]
-  ! *               [ shift and go to state 12 ]
-  ! /               [ shift and go to state 13 ]
-  ! FLOORDIV        [ shift and go to state 14 ]
-  ! %               [ shift and go to state 15 ]
-
-
 state 26
 
-    (7) expression -> expression FLOORDIV expression .
-    (3) expression -> expression . + expression
-    (4) expression -> expression . - expression
-    (5) expression -> expression . * expression
-    (6) expression -> expression . / expression
-    (7) expression -> expression . FLOORDIV expression
-    (8) expression -> expression . % expression
+    (5) expression -> expression + expression .
+    (5) expression -> expression . + expression
+    (6) expression -> expression . - expression
+    (7) expression -> expression . * expression
+    (8) expression -> expression . / expression
+    (9) expression -> expression . FLOORDIV expression
+    (10) expression -> expression . % expression
 
-    +               reduce using rule 7 (expression -> expression FLOORDIV expression .)
-    -               reduce using rule 7 (expression -> expression FLOORDIV expression .)
-    *               reduce using rule 7 (expression -> expression FLOORDIV expression .)
-    /               reduce using rule 7 (expression -> expression FLOORDIV expression .)
-    FLOORDIV        reduce using rule 7 (expression -> expression FLOORDIV expression .)
-    %               reduce using rule 7 (expression -> expression FLOORDIV expression .)
-    $end            reduce using rule 7 (expression -> expression FLOORDIV expression .)
-    )               reduce using rule 7 (expression -> expression FLOORDIV expression .)
+    +               reduce using rule 5 (expression -> expression + expression .)
+    -               reduce using rule 5 (expression -> expression + expression .)
+    $end            reduce using rule 5 (expression -> expression + expression .)
+    )               reduce using rule 5 (expression -> expression + expression .)
+    *               shift and go to state 12
+    /               shift and go to state 13
+    FLOORDIV        shift and go to state 14
+    %               shift and go to state 15
 
+  ! *               [ reduce using rule 5 (expression -> expression + expression .) ]
+  ! /               [ reduce using rule 5 (expression -> expression + expression .) ]
+  ! FLOORDIV        [ reduce using rule 5 (expression -> expression + expression .) ]
+  ! %               [ reduce using rule 5 (expression -> expression + expression .) ]
   ! +               [ shift and go to state 10 ]
   ! -               [ shift and go to state 11 ]
-  ! *               [ shift and go to state 12 ]
-  ! /               [ shift and go to state 13 ]
-  ! FLOORDIV        [ shift and go to state 14 ]
-  ! %               [ shift and go to state 15 ]
 
 
 state 27
 
-    (8) expression -> expression % expression .
-    (3) expression -> expression . + expression
-    (4) expression -> expression . - expression
-    (5) expression -> expression . * expression
-    (6) expression -> expression . / expression
-    (7) expression -> expression . FLOORDIV expression
-    (8) expression -> expression . % expression
+    (6) expression -> expression - expression .
+    (5) expression -> expression . + expression
+    (6) expression -> expression . - expression
+    (7) expression -> expression . * expression
+    (8) expression -> expression . / expression
+    (9) expression -> expression . FLOORDIV expression
+    (10) expression -> expression . % expression
 
-    +               reduce using rule 8 (expression -> expression % expression .)
-    -               reduce using rule 8 (expression -> expression % expression .)
-    *               reduce using rule 8 (expression -> expression % expression .)
-    /               reduce using rule 8 (expression -> expression % expression .)
-    FLOORDIV        reduce using rule 8 (expression -> expression % expression .)
-    %               reduce using rule 8 (expression -> expression % expression .)
-    $end            reduce using rule 8 (expression -> expression % expression .)
-    )               reduce using rule 8 (expression -> expression % expression .)
+    +               reduce using rule 6 (expression -> expression - expression .)
+    -               reduce using rule 6 (expression -> expression - expression .)
+    $end            reduce using rule 6 (expression -> expression - expression .)
+    )               reduce using rule 6 (expression -> expression - expression .)
+    *               shift and go to state 12
+    /               shift and go to state 13
+    FLOORDIV        shift and go to state 14
+    %               shift and go to state 15
+
+  ! *               [ reduce using rule 6 (expression -> expression - expression .) ]
+  ! /               [ reduce using rule 6 (expression -> expression - expression .) ]
+  ! FLOORDIV        [ reduce using rule 6 (expression -> expression - expression .) ]
+  ! %               [ reduce using rule 6 (expression -> expression - expression .) ]
+  ! +               [ shift and go to state 10 ]
+  ! -               [ shift and go to state 11 ]
+
+
+state 28
+
+    (7) expression -> expression * expression .
+    (5) expression -> expression . + expression
+    (6) expression -> expression . - expression
+    (7) expression -> expression . * expression
+    (8) expression -> expression . / expression
+    (9) expression -> expression . FLOORDIV expression
+    (10) expression -> expression . % expression
+
+    +               reduce using rule 7 (expression -> expression * expression .)
+    -               reduce using rule 7 (expression -> expression * expression .)
+    *               reduce using rule 7 (expression -> expression * expression .)
+    /               reduce using rule 7 (expression -> expression * expression .)
+    FLOORDIV        reduce using rule 7 (expression -> expression * expression .)
+    %               reduce using rule 7 (expression -> expression * expression .)
+    $end            reduce using rule 7 (expression -> expression * expression .)
+    )               reduce using rule 7 (expression -> expression * expression .)
 
   ! +               [ shift and go to state 10 ]
   ! -               [ shift and go to state 11 ]
@@ -654,50 +709,98 @@ state 27
   ! %               [ shift and go to state 15 ]
 
 
-state 28
-
-    (10) expression -> ( expression ) .
-
-    +               reduce using rule 10 (expression -> ( expression ) .)
-    -               reduce using rule 10 (expression -> ( expression ) .)
-    *               reduce using rule 10 (expression -> ( expression ) .)
-    /               reduce using rule 10 (expression -> ( expression ) .)
-    FLOORDIV        reduce using rule 10 (expression -> ( expression ) .)
-    %               reduce using rule 10 (expression -> ( expression ) .)
-    $end            reduce using rule 10 (expression -> ( expression ) .)
-    )               reduce using rule 10 (expression -> ( expression ) .)
-
-
 state 29
 
-    (11) expression -> REAL ( expression . )
-    (3) expression -> expression . + expression
-    (4) expression -> expression . - expression
-    (5) expression -> expression . * expression
-    (6) expression -> expression . / expression
-    (7) expression -> expression . FLOORDIV expression
-    (8) expression -> expression . % expression
+    (8) expression -> expression / expression .
+    (5) expression -> expression . + expression
+    (6) expression -> expression . - expression
+    (7) expression -> expression . * expression
+    (8) expression -> expression . / expression
+    (9) expression -> expression . FLOORDIV expression
+    (10) expression -> expression . % expression
 
-    )               shift and go to state 31
-    +               shift and go to state 10
-    -               shift and go to state 11
-    *               shift and go to state 12
-    /               shift and go to state 13
-    FLOORDIV        shift and go to state 14
-    %               shift and go to state 15
+    +               reduce using rule 8 (expression -> expression / expression .)
+    -               reduce using rule 8 (expression -> expression / expression .)
+    *               reduce using rule 8 (expression -> expression / expression .)
+    /               reduce using rule 8 (expression -> expression / expression .)
+    FLOORDIV        reduce using rule 8 (expression -> expression / expression .)
+    %               reduce using rule 8 (expression -> expression / expression .)
+    $end            reduce using rule 8 (expression -> expression / expression .)
+    )               reduce using rule 8 (expression -> expression / expression .)
+
+  ! +               [ shift and go to state 10 ]
+  ! -               [ shift and go to state 11 ]
+  ! *               [ shift and go to state 12 ]
+  ! /               [ shift and go to state 13 ]
+  ! FLOORDIV        [ shift and go to state 14 ]
+  ! %               [ shift and go to state 15 ]
 
 
 state 30
 
-    (12) expression -> FLOOR ( expression . )
-    (3) expression -> expression . + expression
-    (4) expression -> expression . - expression
-    (5) expression -> expression . * expression
-    (6) expression -> expression . / expression
-    (7) expression -> expression . FLOORDIV expression
-    (8) expression -> expression . % expression
+    (9) expression -> expression FLOORDIV expression .
+    (5) expression -> expression . + expression
+    (6) expression -> expression . - expression
+    (7) expression -> expression . * expression
+    (8) expression -> expression . / expression
+    (9) expression -> expression . FLOORDIV expression
+    (10) expression -> expression . % expression
 
-    )               shift and go to state 32
+    +               reduce using rule 9 (expression -> expression FLOORDIV expression .)
+    -               reduce using rule 9 (expression -> expression FLOORDIV expression .)
+    *               reduce using rule 9 (expression -> expression FLOORDIV expression .)
+    /               reduce using rule 9 (expression -> expression FLOORDIV expression .)
+    FLOORDIV        reduce using rule 9 (expression -> expression FLOORDIV expression .)
+    %               reduce using rule 9 (expression -> expression FLOORDIV expression .)
+    $end            reduce using rule 9 (expression -> expression FLOORDIV expression .)
+    )               reduce using rule 9 (expression -> expression FLOORDIV expression .)
+
+  ! +               [ shift and go to state 10 ]
+  ! -               [ shift and go to state 11 ]
+  ! *               [ shift and go to state 12 ]
+  ! /               [ shift and go to state 13 ]
+  ! FLOORDIV        [ shift and go to state 14 ]
+  ! %               [ shift and go to state 15 ]
+
+
+state 31
+
+    (10) expression -> expression % expression .
+    (5) expression -> expression . + expression
+    (6) expression -> expression . - expression
+    (7) expression -> expression . * expression
+    (8) expression -> expression . / expression
+    (9) expression -> expression . FLOORDIV expression
+    (10) expression -> expression . % expression
+
+    +               reduce using rule 10 (expression -> expression % expression .)
+    -               reduce using rule 10 (expression -> expression % expression .)
+    *               reduce using rule 10 (expression -> expression % expression .)
+    /               reduce using rule 10 (expression -> expression % expression .)
+    FLOORDIV        reduce using rule 10 (expression -> expression % expression .)
+    %               reduce using rule 10 (expression -> expression % expression .)
+    $end            reduce using rule 10 (expression -> expression % expression .)
+    )               reduce using rule 10 (expression -> expression % expression .)
+
+  ! +               [ shift and go to state 10 ]
+  ! -               [ shift and go to state 11 ]
+  ! *               [ shift and go to state 12 ]
+  ! /               [ shift and go to state 13 ]
+  ! FLOORDIV        [ shift and go to state 14 ]
+  ! %               [ shift and go to state 15 ]
+
+
+state 32
+
+    (2) statement -> REAL = expression .
+    (5) expression -> expression . + expression
+    (6) expression -> expression . - expression
+    (7) expression -> expression . * expression
+    (8) expression -> expression . / expression
+    (9) expression -> expression . FLOORDIV expression
+    (10) expression -> expression . % expression
+
+    $end            reduce using rule 2 (statement -> REAL = expression .)
     +               shift and go to state 10
     -               shift and go to state 11
     *               shift and go to state 12
@@ -706,30 +809,101 @@ state 30
     %               shift and go to state 15
 
 
-state 31
+state 33
 
-    (11) expression -> REAL ( expression ) .
+    (13) expression -> REAL ( expression . )
+    (5) expression -> expression . + expression
+    (6) expression -> expression . - expression
+    (7) expression -> expression . * expression
+    (8) expression -> expression . / expression
+    (9) expression -> expression . FLOORDIV expression
+    (10) expression -> expression . % expression
 
-    +               reduce using rule 11 (expression -> REAL ( expression ) .)
-    -               reduce using rule 11 (expression -> REAL ( expression ) .)
-    *               reduce using rule 11 (expression -> REAL ( expression ) .)
-    /               reduce using rule 11 (expression -> REAL ( expression ) .)
-    FLOORDIV        reduce using rule 11 (expression -> REAL ( expression ) .)
-    %               reduce using rule 11 (expression -> REAL ( expression ) .)
-    $end            reduce using rule 11 (expression -> REAL ( expression ) .)
-    )               reduce using rule 11 (expression -> REAL ( expression ) .)
+    )               shift and go to state 37
+    +               shift and go to state 10
+    -               shift and go to state 11
+    *               shift and go to state 12
+    /               shift and go to state 13
+    FLOORDIV        shift and go to state 14
+    %               shift and go to state 15
 
 
-state 32
+state 34
 
-    (12) expression -> FLOOR ( expression ) .
+    (3) statement -> FLOOR = expression .
+    (5) expression -> expression . + expression
+    (6) expression -> expression . - expression
+    (7) expression -> expression . * expression
+    (8) expression -> expression . / expression
+    (9) expression -> expression . FLOORDIV expression
+    (10) expression -> expression . % expression
 
-    +               reduce using rule 12 (expression -> FLOOR ( expression ) .)
-    -               reduce using rule 12 (expression -> FLOOR ( expression ) .)
-    *               reduce using rule 12 (expression -> FLOOR ( expression ) .)
-    /               reduce using rule 12 (expression -> FLOOR ( expression ) .)
-    FLOORDIV        reduce using rule 12 (expression -> FLOOR ( expression ) .)
-    %               reduce using rule 12 (expression -> FLOOR ( expression ) .)
-    $end            reduce using rule 12 (expression -> FLOOR ( expression ) .)
-    )               reduce using rule 12 (expression -> FLOOR ( expression ) .)
+    $end            reduce using rule 3 (statement -> FLOOR = expression .)
+    +               shift and go to state 10
+    -               shift and go to state 11
+    *               shift and go to state 12
+    /               shift and go to state 13
+    FLOORDIV        shift and go to state 14
+    %               shift and go to state 15
+
+
+state 35
+
+    (14) expression -> FLOOR ( expression . )
+    (5) expression -> expression . + expression
+    (6) expression -> expression . - expression
+    (7) expression -> expression . * expression
+    (8) expression -> expression . / expression
+    (9) expression -> expression . FLOORDIV expression
+    (10) expression -> expression . % expression
+
+    )               shift and go to state 38
+    +               shift and go to state 10
+    -               shift and go to state 11
+    *               shift and go to state 12
+    /               shift and go to state 13
+    FLOORDIV        shift and go to state 14
+    %               shift and go to state 15
+
+
+state 36
+
+    (12) expression -> ( expression ) .
+
+    +               reduce using rule 12 (expression -> ( expression ) .)
+    -               reduce using rule 12 (expression -> ( expression ) .)
+    *               reduce using rule 12 (expression -> ( expression ) .)
+    /               reduce using rule 12 (expression -> ( expression ) .)
+    FLOORDIV        reduce using rule 12 (expression -> ( expression ) .)
+    %               reduce using rule 12 (expression -> ( expression ) .)
+    $end            reduce using rule 12 (expression -> ( expression ) .)
+    )               reduce using rule 12 (expression -> ( expression ) .)
+
+
+state 37
+
+    (13) expression -> REAL ( expression ) .
+
+    +               reduce using rule 13 (expression -> REAL ( expression ) .)
+    -               reduce using rule 13 (expression -> REAL ( expression ) .)
+    *               reduce using rule 13 (expression -> REAL ( expression ) .)
+    /               reduce using rule 13 (expression -> REAL ( expression ) .)
+    FLOORDIV        reduce using rule 13 (expression -> REAL ( expression ) .)
+    %               reduce using rule 13 (expression -> REAL ( expression ) .)
+    $end            reduce using rule 13 (expression -> REAL ( expression ) .)
+    )               reduce using rule 13 (expression -> REAL ( expression ) .)
+
+
+state 38
+
+    (14) expression -> FLOOR ( expression ) .
+
+    +               reduce using rule 14 (expression -> FLOOR ( expression ) .)
+    -               reduce using rule 14 (expression -> FLOOR ( expression ) .)
+    *               reduce using rule 14 (expression -> FLOOR ( expression ) .)
+    /               reduce using rule 14 (expression -> FLOOR ( expression ) .)
+    FLOORDIV        reduce using rule 14 (expression -> FLOOR ( expression ) .)
+    %               reduce using rule 14 (expression -> FLOOR ( expression ) .)
+    $end            reduce using rule 14 (expression -> FLOOR ( expression ) .)
+    )               reduce using rule 14 (expression -> FLOOR ( expression ) .)
 

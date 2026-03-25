@@ -11,6 +11,7 @@
 # Modified to strictly abort evaluation on syntax and lexer errors. # [G]
 # Modified to enforce strict type-matching on arithmetic operators. # [G]
 # Modified to force stdout flushing to guarantee immediate output. # [G]
+# Modified to allow reserved keywords to act as variable names. # [G]
 # -----------------------------------------------------------------------------
 
 import math  # [G]
@@ -76,7 +77,9 @@ names = {}
 
 
 def p_statement_assign(p):
-    'statement : NAME "=" expression'
+    """statement : NAME "=" expression
+                 | REAL "=" expression
+                 | FLOOR "=" expression"""  # [G]
     names[p[1]] = p[3]
 
 
@@ -141,7 +144,9 @@ def p_expression_number(p):
 
 
 def p_expression_name(p):
-    "expression : NAME"
+    """expression : NAME
+                  | REAL
+                  | FLOOR"""  # [G]
     try:
         p[0] = names[p[1]]
     except LookupError:
